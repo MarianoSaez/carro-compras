@@ -1,0 +1,40 @@
+.table-form {
+    width: fit-content;
+    margin-right: 1px;
+}
+
+.table-input {
+    width: 3rem;
+}
+
+.cantidad-col {
+    width: 15%;
+}
+
+.btn-block {
+    width: 100%;
+    margin-bottom: 0.1rem;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns:max-content max-content max-content;
+    background-color: #ffffff;
+    padding: 10px;
+  }
+
+.grid-item {
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    font-size: 15px;
+    text-align: center;
+}
+
+.btn-radius {
+    border-radius: 5px!important;
+    margin: 0px 1px;
+}
+
+i {
+    font-size: medium;
+}

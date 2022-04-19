@@ -1,0 +1,63 @@
+version: "3"
+services:
+
+  proxy:
+    image: nginx
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./app-nginx.conf:/etc/nginx/conf.d/app-nginx.conf
+    depends_on:
+      - productos
+      - carrocompras
+
+  postgres:
+      image: postgres
+      volumes:
+        - ./pg-init-scripts:/docker-entrypoint-initdb.d
+        - ./data:/var/lib/postgresql/data
+      ports:
+        - '5432:5432'
+      environment:
+        - POSTGRES_MULTIPLE_DATABASES=productos,carrocompras
+        - POSTGRES_USER=postgres
+        - POSTGRES_PASSWORD=postgres
+  
+  productos:
+    build:
+      context: .
+      dockerfile: django-productos-dockerfile
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "8000:8000"
+    # volumes:
+    #   - ./productos/product:/productos/product:cached
+    depends_on:
+      - postgres
+
+
+  carrocompras:
+    build:
+      context: .
+      dockerfile: django-carrocompras-dockerfile
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - "9000:8000"
+    # volumes:
+    #   - ./carro_de_compras/shopping_cart:/carro_de_compras/shopping_cart:cached
+    depends_on:
+      - productos
+      - postgres
+
+  frontend:
+    build:
+      context: .
+      dockerfile: react-dockerfile
+    command: bash -c "npm install && npm start"
+    ports:
+      - "3000:3000"
+    # volumes:
+    #   - ./ecommerce-frontend/src:/ecommerce-frontend/src:cached
+    depends_on:
+      - carrocompras
+      - productos

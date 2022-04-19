@@ -1,0 +1,7 @@
+from python:3.9
+env PYTHONUNBUFFERED 1
+run mkdir /productos
+workdir /productos
+add requirements.txt /productos/
+run pip install --upgrade pip && pip install -r requirements.txt
+add productos/ /productos/

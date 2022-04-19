@@ -1,0 +1,7 @@
+from python:3.9
+env PYTHONUNBUFFERED 1
+run mkdir /carro_de_compras
+workdir /carro_de_compras
+add requirements.txt /carro_de_compras/
+run pip install --upgrade pip && pip install -r requirements.txt
+add carro_de_compras/ /carro_de_compras/

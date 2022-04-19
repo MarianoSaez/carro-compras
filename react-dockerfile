@@ -1,0 +1,5 @@
+from node:14.18.1
+run mkdir /ecommerce-frontend
+workdir /ecommerce-frontend
+ENV PATH /ecommerce-frontend/node_modules/.bin:$PATH
+add ecommerce-frontend/ /ecommerce-frontend/
